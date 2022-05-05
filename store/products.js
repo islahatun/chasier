@@ -1,54 +1,12 @@
-<template>
-  <v-row>
-    <v-row>
-      <v-col cols="10"> search </v-col>
-      <v-col cols="2">
-        <v-menu>
-          <template v-slot:activator="{ on: category }">
-            <v-btn v-on="category" color="primary"> Categori </v-btn>
-          </template>
-          <v-list>
-            <v-list-item-group v-model="categoryId">
-              <v-list-item
-                v-for="(kategori, i) in categories"
-                :value="kategori.id"
-              >
-                <v-list-item-title>{{ kategori.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-menu>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col v-for="(item, i) in filterProducts" cols="2">
-        <v-card :title="item.title" ripple="true">
-          <v-card-actions>
-            <v-img
-              :src="require(`@/assets/image/products/${item.thumbnail}`)"
-            ></v-img>
-          </v-card-actions>
-          <v-card-text align="center" class="product-title">
-            {{ item.title }}
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-row>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      categoryId: false,
-      categories: [
+// row function
+export const state = ()=>({
+    categories: [
         { id: false, title: 'All' },
         { id: 1, title: 'smartphone' },
         { id: 2, title: 'Camera' },
         { id: 3, title: 'TV' },
       ],
-      products: [
+    products: [
         {
           id: 1,
           title: 'Asus Zenfone',
@@ -155,22 +113,11 @@ export default {
           categoryId: 3,
         },
       ],
+      categoryId:0
+})
+
+export const mutations ={
+    updateCategoryId(state, value){
+        state.categoryId =value
     }
-  },
-  computed: {
-    filterProducts() {
-      if (this.categoryId) {
-        return this.products.filter((s) => s.categoryId == this.categoryId)
-      }
-      return this.products
-    },
-  },
 }
-</script>
-<style scoped>
-.product-title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
